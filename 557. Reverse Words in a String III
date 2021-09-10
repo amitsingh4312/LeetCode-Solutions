@@ -46,8 +46,11 @@ class Solution {
         for(int i = 0; i< splited.length; i++){
             str = str+reverseString(splited[i]);
         }
-       return str.substring(0, str.length()-1);
+      return str.trim();
     }
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+We can solve it using inbuilt methods like string builder, but if that's the option, I would love to go with my traditional approach.... grrrrr
+

@@ -106,5 +106,35 @@ class Solution {
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+LOVED THIS QUESTION.
+FINALLY SOLVED IT BY REVERSING THE ARRAY AND THEN REVERSING IT AGAIN BY PARTS
+COULD BE OPTIMIZED BY WRITING ONE FUNCTION TO OPTIMIZE IT INSTEAD OF 3 TIMES, BUT WRITING IT FOR BETTER CLARIFICATION
 
+class Solution {
+    public void rotate(int[] nums, int k) {
+        if(k>nums.length){
+            k = k%nums.length;
+        }
+        System.out.print(k);
+        int temp = 0;
+        for(int i = 0; i<nums.length/2; i++){
+            temp = nums[i];
+            nums[i] = nums[nums.length-1-i];
+            nums[nums.length-1-i] = temp;
+        }
+        temp = 0;
+        for(int i = 0; i<k/2; i++){
+            temp = nums[i];
+            nums[i] = nums[k-1-i];
+            nums[k-1-i] = temp;
+        }
+        temp = 0;
+        for(int i = k; i<((nums.length+k)/2); i++ ){
+            temp = nums[i];
+            nums[i] = nums[(nums.length+k)-i-1];
+            nums[(nums.length+k)-i-1] = temp;
+            //System.out.print(nums[i]);
+        }
+    }
+}
 

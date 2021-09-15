@@ -1,0 +1,78 @@
+Given a string s, find the length of the longest substring without repeating characters.
+
+ 
+
+Example 1:
+
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+Example 2:
+
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+Example 3:
+
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+Example 4:
+
+Input: s = ""
+Output: 0
+ 
+
+Constraints:
+
+0 <= s.length <= 5 * 104
+s consists of English letters, digits, symbols and spaces.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        char[] c = s.toCharArray();
+        
+        if(s.length() == 0){
+            return 0;
+        }
+        
+        String str = "";
+        int length = 1;
+        
+        str = str + c[0];
+        
+        int i = 0;
+        int k = 1;
+        
+        while(k<s.length()){
+            String abc = Character.toString(c[k]);
+            if(!str.contains(abc) && check(str)){
+                str = str + c[k];
+                length++;
+                k++;
+            }else{
+                str = str.substring(1);
+                str = str + c[k];
+                
+                i++;
+                k++;
+            }
+            System.out.println(str + " " + length);
+        }
+        return length;
+    }
+    
+    public boolean check(String str){
+        if(str.length()==1){
+            return true;
+        }
+        return str.chars().filter(e-> Collections.frequency(str.chars().boxed().collect(Collectors.toList()), e) > 1).count() > 1 ? false: true;
+        
+    }
+    
+
+}

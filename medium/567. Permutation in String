@@ -1,0 +1,81 @@
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+
+In other words, return true if one of s1's permutations is the substring of s2.
+
+ 
+
+Example 1:
+
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+Example 2:
+
+Input: s1 = "ab", s2 = "eidboaoo"
+Output: false
+ 
+
+Constraints:
+
+1 <= s1.length, s2.length <= 104
+s1 and s2 consist of lowercase English letters.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Amazing question. Wow
+Solved it using 2 integer arrays of size 26, which store the repetition of respective alphabets (1-26) with current size of sliding window concept from s1.
+Its hard to explain using words and not a diagram, but let me try(for my future reference as well)
+
+Take two integer arrays. s1arr and s2arr of size 26(bcz string contains only lowecase letters). 
+0 is for 'a', 25 is for 'z' and the value inside is its repetition. eg 'aab' would be [2,1,0,0,.....];
+
+Now fill s2arr in the same way, just the filling must be in the form of sliding window, which means, if s1 has 3 alphabets, check for 3 only
+eg s1 = abc, s2 = abdcbad, then s2 would be checked by: abd -> bdc -> dcb -> cba with updated array values as well... Hope it made clear.
+Look at the code and it would be more clear.
+
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if(s2.length() < s1.length()) return false;
+        
+        int[] s1arr = new int[26];
+        int[] s2arr = new int[26];
+        
+        for(int i = 0; i< s1.length(); i++) {
+            s1arr[s1.charAt(i) - 'a']++;
+            s2arr[s2.charAt(i) - 'a']++;
+        }
+
+        if(Arrays.equals(s2arr, s1arr)) {
+            return true;
+        }
+        
+        for(int i = s1.length(); i < s2.length(); i++) {
+            s2arr[s2.charAt(i-s1.length()) - 'a']--;
+            s2arr[s2.charAt(i) - 'a']++;
+            if(Arrays.equals(s2arr, s1arr)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

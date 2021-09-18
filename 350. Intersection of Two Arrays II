@@ -1,0 +1,61 @@
+Given two integer arrays nums1 and nums2, return an array of their intersection. 
+Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Explanation: [9,4] is also accepted.
+ 
+ 
+ --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Did it using arraylist and then converting the new arraylist back to an array. Expensive approach. 
+ I think it could be done by sorting the array as well, but in this solution, sorting makes no sense, it was just an experiments for arrays.
+ If i came up with a better solution, I will update.
+ 
+ 
+ class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+      
+      ArrayList<Integer> al = new ArrayList<>();
+      
+      List<Integer> list1 = new ArrayList<>();
+      List<Integer> list2 = new ArrayList<>();
+      
+      for(int i : nums1){
+        list1.add(i);
+      }
+      for(int i : nums2){
+        list2.add(i);
+      }
+      
+        if(nums1.length < nums2.length){
+          for(int i = 0; i < nums1.length; i++){
+            if(list2.contains(list1.get(i))){
+              list2.remove(new Integer(list1.get(i)));
+              al.add(list1.get(i));
+            }
+          }
+        }else{
+          for(int i = 0; i < nums2.length; i++){
+            if(list1.contains(list2.get(i))){
+              list1.remove(new Integer(list2.get(i)));
+              al.add(list2.get(i));
+            }
+          }
+        }
+      int[] a = new int[al.size()];
+      for(int i = 0; i<al.size(); i++){
+        a[i] = al.get(i);
+      }
+      return a;
+    }
+}

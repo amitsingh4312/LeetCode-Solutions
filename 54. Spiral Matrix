@@ -1,0 +1,83 @@
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+ 
+
+Example 1:
+
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+Example 2:
+
+
+Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+ 
+
+Constraints:
+
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 10
+-100 <= matrix[i][j] <= 100
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+APPROACH: traverse according to the directions. (4 directions)
+left to right, top to bottom, right to left and bottom to top
+Update the top, left, right, bottom variables accordingly
+and update direction variable as well. 
+
+
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+      int total = matrix.length * matrix[0].length;
+      int count = 0;
+      
+
+      
+      List<Integer> li = new ArrayList<Integer>();
+      
+      int left = 0;
+      int top = 0;
+      int bottom = matrix.length-1;
+      int right = matrix[0].length-1;
+      
+      int direction = 0;
+      
+      while(left <= right && top <= bottom){
+        if(direction == 0){
+          for(int i = left; i<=right; i++){
+            li.add(matrix[top][i]);
+          }
+          top++;
+          direction = 1;
+        }else if(direction == 1){
+          for(int i = top; i<=bottom; i++){
+            li.add(matrix[i][right]);
+          }
+          right--;
+          direction = 2;
+        }else if(direction == 2){
+          for(int i = right; i>=left; i--){
+            li.add(matrix[bottom][i]);
+          }
+          bottom--;
+          direction = 3;
+        }else if(direction == 3){
+          for(int i = bottom; i>=top; i--){
+            li.add(matrix[i][left]);
+          }
+          left++;
+          direction = 0;
+        }
+      }
+      
+      
+      
+      System.out.print(right);
+        
+      return li;
+    }
+}

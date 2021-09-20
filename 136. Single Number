@@ -1,0 +1,58 @@
+Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+ 
+
+Example 1:
+
+Input: nums = [2,2,1]
+Output: 1
+Example 2:
+
+Input: nums = [4,1,2,1,2]
+Output: 4
+Example 3:
+
+Input: nums = [1]
+Output: 1
+ 
+
+Constraints:
+
+1 <= nums.length <= 3 * 104
+-3 * 104 <= nums[i] <= 3 * 104
+Each element in the array appears twice except for one element which appears only once.
+Accepted
+1,297,985
+Submissions
+1,921,210
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+APPROACH: Sort the array, now add and subract the consecutive numbers, you will be left with the odd one only.
+Expensive approach, but unique
+
+
+
+class Solution {
+    public int singleNumber(int[] nums) {
+        Arrays.sort(nums);
+      int flag = 0, i=0, num=0;
+      while(i<nums.length){
+        if(flag==0){
+          num = nums[i]+num;
+          i++;
+          flag = 1;
+        }else{
+          num = num-nums[i];
+          flag = 0;
+          i++;
+        }
+        System.out.print(num);
+      }
+      return num;
+    }
+}

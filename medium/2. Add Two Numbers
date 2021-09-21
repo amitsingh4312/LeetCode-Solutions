@@ -1,0 +1,120 @@
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+ 
+
+Example 1:
+
+
+Input: l1 = [2,4,3], l2 = [5,6,4]
+Output: [7,0,8]
+Explanation: 342 + 465 = 807.
+Example 2:
+
+Input: l1 = [0], l2 = [0]
+Output: [0]
+Example 3:
+
+Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+Output: [8,9,9,9,0,0,0,1]
+ 
+
+Constraints:
+
+The number of nodes in each linked list is in the range [1, 100].
+0 <= Node.val <= 9
+It is guaranteed that the list represents a number that does not have leading zeros.
+Accepted
+2,192,780
+Submissions
+5,944,553
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+NOTE: A similar question was asked to me in CISCO technical test. This is addition , there I was supposed to subtract 2 linked list.
+      The approach i followed during the test was to conver lisnked list into integers, then subtract them and then convert digit by digit into linked list again.
+      I was not able to complete it in time, I was able to print the answer in the form of an integer, but that did not pass any test case so bad luch :(
+      
+      However I am confident and know how to tackle the same problem if ever asked again.
+      
+      
+APPROACH: Make a new Linked list, and a node. Update the new linked list with the sum of two nodes and a carry variable, whose value is 1
+          if the sum is > 9. Update the carry to 0 otherwise.
+          
+          Check the corner case i.e. if the two linked lists are null at one time, but still 1 as a carry is left
+          
+PROBLEM: Although I am not a researcher to comment on LEETCODE questions, but the sum is confusing as it goes from left to right. Not right to left.
+         I know left to right is more complex, but it is what it is.
+         
+         
+SOLUTION:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+      ListNode list1 = l1;
+      ListNode list2 = l2;
+      
+      ListNode head = new ListNode(0);
+      ListNode newList = head;
+      // newList.next = new ListNode(head);
+      
+      int carry = 0;
+      int sum = 0;
+      
+      while(list1!=null || list2!=null || carry !=0){
+        if(list1!=null && list2!=null){
+          sum = carry + list1.val + list2.val;
+          if(sum>9){
+            sum = sum%10;
+            carry = 1;
+          }else{
+            carry = 0;
+          }
+          head.next = new ListNode(sum);
+          list1 = list1.next;
+          list2 = list2.next;
+          head = head.next;
+        }else if(list1 == null){
+          sum = carry + list2.val;
+          if(sum>9){
+            sum = sum%10;
+            carry = 1;
+          }else{
+            carry = 0;
+          }
+          head.next = new ListNode(sum);
+          list2 = list2.next;
+          head = head.next;
+        }else if(list2 == null){
+          sum = carry + list1.val;
+          if(sum>9){
+            sum = sum%10;
+            carry = 1;
+          }else{
+            carry = 0;
+          }
+          head.next = new ListNode(sum);
+          list1 = list1.next;
+          head = head.next;
+        }
+        if(list1 == null && list2 == null && carry != 0){
+          head.next = new ListNode(carry);
+          carry = 0;
+        }
+      }
+      
+      return newList.next;
+      
+    }
+}

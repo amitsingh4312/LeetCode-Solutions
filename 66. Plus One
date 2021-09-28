@@ -1,0 +1,88 @@
+You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.
+
+Increment the large integer by one and return the resulting array of digits.
+
+ 
+
+Example 1:
+
+Input: digits = [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+Incrementing by one gives 123 + 1 = 124.
+Thus, the result should be [1,2,4].
+Example 2:
+
+Input: digits = [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321.
+Incrementing by one gives 4321 + 1 = 4322.
+Thus, the result should be [4,3,2,2].
+Example 3:
+
+Input: digits = [0]
+Output: [1]
+Explanation: The array represents the integer 0.
+Incrementing by one gives 0 + 1 = 1.
+Thus, the result should be [1].
+Example 4:
+
+Input: digits = [9]
+Output: [1,0]
+Explanation: The array represents the integer 9.
+Incrementing by one gives 9 + 1 = 10.
+Thus, the result should be [1,0].
+ 
+
+Constraints:
+
+1 <= digits.length <= 100
+0 <= digits[i] <= 9
+digits does not contain any leading 0's.
+Accepted
+959,983
+Submissions
+2,285,824
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+APPROACH:
+
+Great question
+Start with a carry variable with value 1;
+Traverse the array from last to first and add carry to the last value
+update the other indexes based on the updated carry value (i.e. if the value at any index is 9, carry is 1 thus the value will be 0 and carry for next index would be 1)
+
+Corner case: when the loop is traversed and we are still left with a carry.
+In that case, we need to define a new array of size n+1, and initialize the new_Aarray[0] = 1
+and oher values would go as it is of the last updated array...
+
+REALLY NICE QUESTION. LOVED IT
+
+
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int carry = 1;
+            for(int i = digits.length-1; i>=0; i--){
+                if(digits[i] + carry > 9){
+                    int remainder = (digits[i] + carry)%10;
+                    digits[i] = remainder;
+                    carry = 1;
+                }else{
+                    digits[i] = digits[i] + carry;
+                    carry = 0;
+                }
+            }
+        if(carry == 0){
+            return digits;
+        }else{
+            int[] digits1 = new int[digits.length+1];
+            digits1[0] = 1;
+            for(int i = 0; i<digits.length-1; i++){
+                digits1[i+1] = digits[i];
+            }
+            return digits1;
+        }
+    }
+}

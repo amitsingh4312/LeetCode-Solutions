@@ -31,7 +31,8 @@ Follow up: Could you do this in one pass?
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Medium Leetcode Question.
-Solved it using 2 pointers approach. One pointer will be delayed by n steps from other. when first pointer reaches n, initialize second pointer. when first pointer reaches null, 
+Solved it using 2 pointers approach. One pointer will be delayed by n steps from other. when first pointer reaches n, 
+initialize second pointer. when first pointer reaches null, 
 delete current node of first pointer. Take care of corner cases(n = length of linkedlist, then you need to remove head).
 
 
@@ -71,5 +72,48 @@ class Solution {
         System.out.print(p1);
         p1.next = p1.next.next;
         return head;
+    }
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        
+        ListNode newHead = head;
+        ListNode pointer = newHead;
+        
+        
+        int count = 0;
+        while(head!=null){
+            head = head.next;
+            count++;
+        }
+        //System.out.print(count);
+        int actualIndex = count - n;
+        
+        if(actualIndex == 0){
+            return newHead.next;
+        }
+            
+        while(actualIndex>1){
+            pointer = pointer.next;
+            actualIndex--;
+        }
+        
+        pointer.next = pointer.next.next;
+        
+        return newHead;
     }
 }

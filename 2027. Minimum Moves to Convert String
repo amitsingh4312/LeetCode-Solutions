@@ -1,0 +1,57 @@
+You are given a string s consisting of n characters which are either 'X' or 'O'.
+
+A move is defined as selecting three consecutive characters of s and converting them to 'O'. Note that if a move is applied to the character 'O', it will stay the same.
+
+Return the minimum number of moves required so that all the characters of s are converted to 'O'.
+
+ 
+
+Example 1:
+
+Input: s = "XXX"
+Output: 1
+Explanation: XXX -> OOO
+We select all the 3 characters and convert them in one move.
+Example 2:
+
+Input: s = "XXOX"
+Output: 2
+Explanation: XXOX -> OOOX -> OOOO
+We select the first 3 characters in the first move, and convert them to 'O'.
+Then we select the last 3 characters and convert them so that the final string contains all 'O's.
+Example 3:
+
+Input: s = "OOOO"
+Output: 0
+Explanation: There are no 'X's in s to convert.
+ 
+
+Constraints:
+
+3 <= s.length <= 1000
+s[i] is either 'X' or 'O'.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+APPROACH: Was stuck since a long time because I was considering fix sliding window. The loophole in my code was what is the first element need not to be replaced
+Very basic case but sometimes you are overwhelmed and don't think of it. Having a rough time
+
+
+class Solution {
+    public int minimumMoves(String s) {
+        int count = 0;
+        int start = 0;
+        
+        while(start<s.length()){
+            if(s.charAt(start)=='O'){
+                start++;
+            }else{
+                count++;
+                start += 3;
+            }
+        }
+        return count;
+    }
+}
